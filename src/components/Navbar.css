@@ -1,0 +1,44 @@
+.navbar{
+    display: flex;
+    justify-content:center;
+    align-items:center;
+    background-color: #292b2c;
+    color:white;
+    padding:10px 20px;
+    box-shadow: 0px 2px 5px rgba(0,0,0,0.1);
+    position: relative
+
+}
+
+.bank-info{
+    text-align:center;
+}
+
+.navbar-logo{
+    font-size: 28px;
+    margin:0;
+    position:absolute;
+    left:20%;
+    bottom: 10%;
+    transform: translateX(-50%);
+}
+
+.navbar-logo a{
+    color:white;
+    text-decoration: none;
+    font-size:1.5rem;
+}
+.tag-line{
+    font-size: 14px;
+    margin:0;
+    opacity:0.8;
+}
+
+.navbar-links{
+    display:flex;
+    gap:20px;
+}
+
+.navbar-links li a:hover{
+    hover: lightgray;
+}
