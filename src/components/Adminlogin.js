@@ -1,6 +1,5 @@
 import React,{useState} from 'react';
 import { useNavigate } from 'react-router-dom';
-import Register from './Register';
 import {Link} from 'react-router-dom';
 import AdminDashboard from './AdminDashboard'
 import {

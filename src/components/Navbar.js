@@ -17,7 +17,7 @@ const Navbar = ()=>{
             <ul className = 'navbar-links'>
                 <li><Link to = '/FundTransfer'>Fund Transfer </Link></li>
                 {/* <li><Link to = '/AccountSummary'>User Register </Link></li> */}
-                <li><Link to = '/#Logout'>Logout</Link></li>
+                <li><Link to = '/Logout'>Logout</Link></li>
                 
             </ul>
         </nav>

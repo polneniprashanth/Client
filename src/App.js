@@ -10,7 +10,17 @@ import Adminlogin from './components/Adminlogin';
 import AdminDashboard from './components/AdminDashboard';
 import Accountopening from './components/Accountopening';
 import Errorpage from './components/Errorpage';
+import Result from './components/Result';
 import FundTransfer from './components/FundTransfer';
+import Accountdetails from './components/Accountdetails';
+import Logout from './components/Logout';
+
+import Withdraw from './components/Withdraw';
+import Deposit from './components/Deposit';
+import WResult from './components/WResult';
+import Adminaccess from './components/Adminaccess';
+import Netbankingcreate from './components/Netbankingcreate';
+import Netbankingchange from './components/Netbankingchange';
 
 
 
@@ -43,6 +53,23 @@ const App = ()=>{
 
         <Route exact path = "/FundTransfer" element = {<FundTransfer/>}/>
 
+        <Route exact path = "/Accountdetails/:data" element = {<Accountdetails/>}/>
+
+        <Route exact path = "/Result/:msg" element = {<Result/>}/>
+
+
+        <Route exact path = "/WResult/:msg" element = {<WResult/>}/>
+
+        
+        <Route exact path = "/Withdraw" element = {<Withdraw/>}/>
+        <Route exact path = "/Deposit" element = {<Deposit/>}/>
+        <Route exact path = "/Logout" element = {<Logout/>}/>
+        <Route exact path = "/Adminaccess" element = {<Adminaccess/>}/>
+
+        <Route exact path = "/Netbankingcreate" element = {<Netbankingcreate/>}/>
+
+        <Route exact path = "/Netbankingchange" element = {<Netbankingchange/>}/>
+        
         <Route exact path = "*" element = {<Errorpage/>}/>
 
 

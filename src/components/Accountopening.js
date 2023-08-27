@@ -22,27 +22,33 @@ import axios from 'axios';
 // const Id = http://172.20.0.129:8090/accountDetails/saveAccdetails'
 function Accountopening() {
   const {userid} = useParams();
-  const [Title,setTitle] = useState('');
+  const [title,setTitle] = useState('');
   const [firstName,setfirstname] = useState('');
   const [lastName,setlastname] = useState('');
   const [fathersName,setfathersName] = useState('');
-  const [DOB,setbirthday] = useState('');
+  const [dob,setbirthday] = useState('');
   //const [gender,setgender] = useState('');
   const [addrRes,setaddresstemp] = useState('');
   const [addrPer,setaddressper] = useState('');
   const [occType,setoccType] = useState('');
-  const [state,setstate] = useState('');
-  const [pincode,setpincode] = useState('');
-  const [adharcard,setadharcard] = useState(0);
+  const [adharCard,setadharCard] = useState(0);
   const [mobile,setmobilenumber] = useState('');
   const [email,setemail] = useState('');
   const [srcInc, setsrcInc] = useState('');
   const [middleName, setmiddleName] = useState('');
+
+  
   const userID = userid;
+  // const navigate = useNavigate();
+
   const navigate = useNavigate();
+  if(!sessionStorage.getItem("ID")){
+    navigate('/login');
+  }
 
 
   const [grossAnualIncome, setgrossAnualIncome] = useState(0);
+  const [custerror, setcusterror] = useState('');
 
   const handleTitlechange = (e) => {
     setTitle(e.target.value);
@@ -53,6 +59,19 @@ function Accountopening() {
 
   const handlesubmit = async(e) =>{
     e.preventDefault();
+
+    if(mobile.length != 10){
+     setcusterror("Mobile number should be 10 digits");
+      return;
+    }
+    if(adharCard.length != 12){
+      setcusterror("Aadhar card number should be 12 digits");
+      return;
+    }   
+    
+   
+
+
     try{
         // const response = await fetch('http://172.20.0.55:9001/user/auth',{
         //     method: 'POST', 
@@ -62,21 +81,21 @@ function Accountopening() {
         //     body: JSON.stringify({  email , passwordHash }),
         // } )
 
-        const response = await axios.post('http://172.20.0.129:8090/accountDetails/saveAccdetails', 
-        {Title, 
+        const response = await axios.post(`http://172.20.0.55:9001/account/create/${userID}`, 
+        {title, 
           firstName,
           middleName,
           lastName,
           fathersName,
-          DOB,
+          dob,
           mobile,
           addrRes,
           addrPer,
           occType,
           srcInc,
           grossAnualIncome,
-          adharcard,
-          userID});
+          adharCard
+          });
         console.log(response);
         // const token = response.data.token;
         // localStorage.setItem("token",token);
@@ -84,9 +103,9 @@ function Accountopening() {
         // if(response.status === 200){
         //     //var resp=await response.json()
 
-          if(response.data.success){
-            var userid = response.data.uid;
-            navigate(`/usersummary/${userid}`);
+          if(response.status ===200){
+            //var userid = response.data.uid;
+            navigate(`/usersummary/${userID}`);
 
           }else{
 
@@ -125,8 +144,8 @@ function Accountopening() {
                   <MDBRow>
 
                   <MDBCol md='6'>
-                        <select value={Title} onChange={handleTitlechange}>
-                          <option value="">Select Title</option>
+                        <select value={title} onChange={handleTitlechange}>
+                          <option value="">Select title</option>
                           <option value="Mr">Mr</option>
                           <option value="Miss">Miss</option>
                           <option value="Mrs">Mrs</option>
@@ -134,7 +153,7 @@ function Accountopening() {
                   </MDBCol>
 
                     <MDBCol md='6'>
-                      <MDBInput wrapperClass='mb-4' label='First Name' size='lg' id='form1' type='text'value = {firstName} onChange = {(e)=> setfirstname(e.target.value)}/>
+                      <MDBInput wrapperClass='mb-4' label='First Name' size='lg' id='form1' type='text'value = {firstName} onChange = {(e)=> setfirstname(e.target.value)} required/>
                     </MDBCol>
 
 
@@ -151,35 +170,38 @@ function Accountopening() {
                   
                   <MDBInput wrapperClass='mb-4' label='Father Name' size='lg' id='form4' type='text' value = {fathersName} onChange = {(e)=> setfathersName(e.target.value)}/>
                   
-                  <MDBInput wrapperClass='mb-4' label='Birthday' size='lg' id='form3' type='date' value = {DOB} onChange = {(e)=> setbirthday(e.target.value)}/>
+                  <MDBInput wrapperClass='mb-4' label='Birthday' size='lg' id='form3' type='date' value = {dob} onChange = {(e)=> setbirthday(e.target.value)} required />
                   
 
-                  <MDBInput wrapperClass='mb-4' label=' Temporaray Address' size='lg' id='form4' type='text' value = {addrRes} onChange = {(e)=> setaddresstemp(e.target.value)}/>
+                  <MDBInput wrapperClass='mb-4' label=' Temporaray Address' size='lg' id='form4' type='text' value = {addrRes} onChange = {(e)=> setaddresstemp(e.target.value)} required/>
                   
-                  <MDBInput wrapperClass='mb-4' label='Permanent Address' size='lg' id='form4' type='text' value = {addrPer} onChange = {(e)=> setaddressper(e.target.value)}/>
+                  <MDBInput wrapperClass='mb-4' label='Permanent Address' size='lg' id='form4' type='text' value = {addrPer} onChange = {(e)=> setaddressper(e.target.value)} required/>
 
                   <MDBRow>
 
                   <MDBCol md='6'>
-                      <MDBInput wrapperClass='mb-4' label='Occupation Type' size='lg' id='form1' type='text' value = {occType} onChange = {(e)=> setoccType(e.target.value)}/>
+                      <MDBInput wrapperClass='mb-4' label='Occupation Type' size='lg' id='form1' type='text' value = {occType} onChange = {(e)=> setoccType(e.target.value)} required/>
                     </MDBCol>
 
                     <MDBCol md='6'>
-                      <MDBInput wrapperClass='mb-4' label='Source Income' size='lg' id='form2' type='text' value = {srcInc} onChange = {(e)=> setsrcInc(e.target.value)}/>
+                      <MDBInput wrapperClass='mb-4' label='Source Income' size='lg' id='form2' type='text' value = {srcInc} onChange = {(e)=> setsrcInc(e.target.value)} required/>
                     </MDBCol>
 
                   </MDBRow>
 
-                  <MDBInput wrapperClass='mb-4' label='Gross Income' size='lg' id='form4' type='text' value = {grossAnualIncome} onChange = {(e)=> setgrossAnualIncome(e.target.value)}/>
-                  <MDBInput wrapperClass='mb-4' label='Aaadhar Number' size='12' max='12' id='form5' type='text' value = {adharcard} onChange = {(e)=> setadharcard(e.target.value)}/>
-                  <MDBInput wrapperClass='mb-4' label='Mobile Number' size='10' max='10' id='form5' type='text' value = {mobile} onChange = {(e)=> setmobilenumber(e.target.value)}/>
+                  <MDBInput wrapperClass='mb-4' label='Gross Income' size='lg' id='form4' type='text' value = {grossAnualIncome} onChange = {(e)=> setgrossAnualIncome(e.target.value)} required/>
+                  <MDBInput wrapperClass='mb-4' label='Aaadhar Number' size='12' max='12' id='form5' type='text' value = {adharCard} onChange = {(e)=> setadharCard(e.target.value)} required />
+                  <MDBInput wrapperClass='mb-4' label='Mobile Number' size='10' max='10' id='form5' type='text' value = {mobile} onChange = {(e)=> setmobilenumber(e.target.value)} required/>
                   {/* <MDBInput wrapperClass='mb-4' label='Email ID' size='lg' id='form6' type='text' value = {email} onChange = {(e)=> setemail(e.target.value)}/> */}
 
 
 
                   <div className="d-flex justify-content-center pt-3">
                     <MDBBtn onClick = {handlesubmit} className='ms-2' color='warning' size='lg'>Submit form</MDBBtn>
+                    
                   </div>
+
+                  <h6 style = {{color : 'red'}}>  {custerror}</h6>
 
                 </MDBCardBody>
              

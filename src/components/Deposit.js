@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState,useEffect} from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import {Link} from 'react-router-dom';
 import Result from './Result';
@@ -19,20 +19,18 @@ import Navbar from './Navbar';
 import './Navbar.css';
 import axios from 'axios';
 
-function FundTransfer() {
-    const navigate = useNavigate();
-    const [senderAID, setSenderAID] = useState('');
-    const [receiverAID, setreceiverAID] = useState('');
+function Deposit() {
+    // const navigate = useNavigate();
+    const [receiverAID, setRecieverAID] = useState();
     const [ammount, setammount] = useState();
     const [remarks, setremarks] = useState('');
-    const [mode, setmode] = useState('');
+   
 
-
-
-    
-  const handlemodechange = (e) => {
-    setmode(e.target.value);
-  }
+    const navigate = useNavigate();
+    if(!sessionStorage.getItem("ID")){
+      navigate('/login');
+    }
+ 
 
  
 
@@ -45,12 +43,12 @@ function FundTransfer() {
 
 
     try{
-        const response = await fetch('http://172.20.0.55:9001/transactions/transfer',{
+        const response = await fetch('http://172.20.0.55:9001/transactions/deposit',{
             method: 'POST', 
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({  senderAID,receiverAID,ammount, remarks,mode,username,password
+            body: JSON.stringify({  receiverAID,ammount, remarks
         }),
       });
 
@@ -71,16 +69,8 @@ function FundTransfer() {
         const data = await response.json();
 
         console.log(data);
-        const msg = data.message;
-        console.log(msg);
-        navigate(`/Result/${msg}`);
 
-        if(data.errcode === 0){
-          return 'Transfer was successful'
-        }
-        else{
-          throw new Error('Transfer was failed');
-        }
+       
         
       }
 
@@ -140,11 +130,11 @@ function FundTransfer() {
                   
     
                     <MDBCardBody className='text-black d-flex flex-column justify-content-center'>
-                      <h3 className="mb-5 text-uppercase fw-bold">Fund Transfer form</h3>
+                      <h3 className="mb-5 text-uppercase fw-bold">Deposit form</h3>
                       
-                      <MDBInput wrapperClass='mb-4' label='Sender Account Number'value = {senderAID} onChange = {(e)=> setSenderAID(e.target.value)} size='lg' id='form4' type='number' />
+                      <MDBInput wrapperClass='mb-4' label='Account Number' value = {receiverAID} onChange = {(e)=> setRecieverAID(e.target.value)} size='lg' id='form4' type='number' />
                       
-                      <MDBInput wrapperClass='mb-4' label='Reciever Account Number' value = {receiverAID} onChange = {(e)=> setreceiverAID(e.target.value)} size='lg' id='form4' type='number' />
+                     
                       
     
                       <MDBInput wrapperClass='mb-4' label='Amount' value = {ammount} onChange = {(e)=>setammount(e.target.value)} size='lg' id='form4' type='number' />
@@ -153,14 +143,7 @@ function FundTransfer() {
 
 
                       <MDBInput wrapperClass='mb-4' label='Remarks' value = {remarks} onChange = {(e)=>setremarks(e.target.value)} size='lg' id='form4' type='text' />
-                      <MDBCol md='6'>
-                        <select value={mode} onChange={handlemodechange}>
-                          <option value="">Select mode</option>
-                          <option value="IMPS">IMPS</option>
-                          <option value="RTGS">RTGS</option>
-                          <option value="NEFT">NEFT</option>
-                        </select>
-                  </MDBCol>
+                     
     
     
                       <div className="d-flex justify-content-center pt-3">
@@ -179,4 +162,4 @@ function FundTransfer() {
         </>
     );
 }
-export default FundTransfer;
+export default Deposit;

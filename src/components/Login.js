@@ -44,8 +44,12 @@ const Login = ()=>{
             // if(response.status === 200){
             //     //var resp=await response.json()
 
+
+            
+
               if(response.data.success){
                 var userid = response.data.uid;
+                sessionStorage.setItem("ID", userid);
                 console.log(userid);
                 navigate(`/usersummary/${userid}`);
 
