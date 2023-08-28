@@ -51,6 +51,14 @@ const AccountSummary = ()=>{
     return (
         <>
         <div> <Navbar/></div>
+        
+        <div style={{marginTop:"5px"}}>
+            <span style={{marginRight:"20px"}}><MDBBtn onClick={()=> navigate('/Netbankingcreate')}>Establish Netbanking </MDBBtn></span>
+            <span><MDBBtn onClick = {()=> navigate('/Netbankingchange')}>Update Netbanking credentials</MDBBtn></span>
+        </div> 
+
+
+        
 
         <div>
             <h2>Account Summary for User {userid}</h2>

@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useState, useEffect} from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import {Link} from 'react-router-dom';
 import Result from './Result';
@@ -26,21 +26,49 @@ function FundTransfer() {
     const [ammount, setammount] = useState();
     const [remarks, setremarks] = useState('');
     const [mode, setmode] = useState('');
+    const [userid,setuserid] = useState('');
+    const [Accountdetails,setAccountdetails] = useState([]);
+    const [password, setpassword] = useState();
+
+    useEffect(() => {
+      if(!sessionStorage.getItem("ID")){
+        navigate('/login');
+      }
+      else{
+        const useridFromSession = sessionStorage.getItem("ID");
+        setuserid(useridFromSession);
+        console.log(useridFromSession)
+      }
+    },[])
+    
 
 
+    useEffect(() =>{
+      // axios.get(`http://172.20.0.55:9001/account/summary/${userid}`)
+      fetch(`http://172.20.0.55:9001/account/summary/${userid}`)
 
+      .then((response) => response.json())
+
+      .then((data)=>{
+          setAccountdetails(data);
+          console.log(data);
+      })
+      .catch((error) => console.error(error));
+    }, [userid]);
     
   const handlemodechange = (e) => {
     setmode(e.target.value);
   }
 
- 
+  const handlemode1change = (e) => {
+    setSenderAID(e.target.value);
+  }
 
 
   const handlesubmit = async(e) =>{
     e.preventDefault();
     const username = "rew";
-    const password = "te";
+    // const password = "te";
     
 
 
@@ -142,13 +170,23 @@ function FundTransfer() {
                     <MDBCardBody className='text-black d-flex flex-column justify-content-center'>
                       <h3 className="mb-5 text-uppercase fw-bold">Fund Transfer form</h3>
                       
-                      <MDBInput wrapperClass='mb-4' label='Sender Account Number'value = {senderAID} onChange = {(e)=> setSenderAID(e.target.value)} size='lg' id='form4' type='number' />
-                      
+                      {/* <MDBInput wrapperClass='mb-4' label='Sender Account Number'value = {senderAID} onChange = {(e)=> setSenderAID(e.target.value)} size='lg' id='form4' type='number' /> */}
+                      <MDBCol style={{display:"flex"}}> Sender Account Number
+                        <select style={{marginBottom:"20px", marginLeft:"35px"}} value={senderAID} onChange={handlemode1change}>
+                          <option value="">Select Account</option>
+                          {Accountdetails.map((account) =>(
+                            <option value={account.accountID}>{account.accountID}</option>
+                          ))}
+                        </select>
+                    </MDBCol>
                       <MDBInput wrapperClass='mb-4' label='Reciever Account Number' value = {receiverAID} onChange = {(e)=> setreceiverAID(e.target.value)} size='lg' id='form4' type='number' />
                       
-    
+                      <MDBInput wrapperClass='mb-4' label='Net Banking password' value = {password} onChange = {(e)=> setpassword(e.target.value)} size='lg' id='form4' type='number' />
+
                       <MDBInput wrapperClass='mb-4' label='Amount' value = {ammount} onChange = {(e)=>setammount(e.target.value)} size='lg' id='form4' type='number' />
                       
+                      {/* <MDBInput wrapperClass='mb-4' label='Natbanking Password' value = {password} onChange = {(e)=>setpassword(e.target.value)} size='lg' id='form4' type='number' /> */}
+
                       {/* <MDBInput wrapperClass='mb-4' label='Type of Transfer' size='lg' id='form4' type='text'/> */}
 
 

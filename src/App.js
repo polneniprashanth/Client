@@ -61,8 +61,12 @@ const App = ()=>{
         <Route exact path = "/WResult/:msg" element = {<WResult/>}/>
 
         
-        <Route exact path = "/Withdraw" element = {<Withdraw/>}/>
-        <Route exact path = "/Deposit" element = {<Deposit/>}/>
+        <Route exact path = "/Withdraw/:aid" element = {<Withdraw/>}/>
+
+
+        
+        <Route exact path = "/Deposit/:aid" element = {<Deposit/>}/>
+
         <Route exact path = "/Logout" element = {<Logout/>}/>
         <Route exact path = "/Adminaccess" element = {<Adminaccess/>}/>
 

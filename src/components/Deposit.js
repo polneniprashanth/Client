@@ -24,7 +24,8 @@ function Deposit() {
     const [receiverAID, setRecieverAID] = useState();
     const [ammount, setammount] = useState();
     const [remarks, setremarks] = useState('');
-   
+
+    const {aid} = useParams(); 
 
     const navigate = useNavigate();
     if(!sessionStorage.getItem("ID")){
@@ -132,7 +133,7 @@ function Deposit() {
                     <MDBCardBody className='text-black d-flex flex-column justify-content-center'>
                       <h3 className="mb-5 text-uppercase fw-bold">Deposit form</h3>
                       
-                      <MDBInput wrapperClass='mb-4' label='Account Number' value = {receiverAID} onChange = {(e)=> setRecieverAID(e.target.value)} size='lg' id='form4' type='number' />
+                      <MDBInput wrapperClass='mb-4' label='Account Number' value = {aid}  size='lg' id='form4' type='number' />
                       
                      
                       

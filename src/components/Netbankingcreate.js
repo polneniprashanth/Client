@@ -23,6 +23,9 @@ function Netbankingcreate() {
 
     const [aid, setaid] = useState();
     const [password, setpassword] = useState();
+    const [status,setstatus] = useState('');
+
+    const navigate = useNavigate();
 
  
 
@@ -49,7 +52,12 @@ function Netbankingcreate() {
 
         console.log(data);
         const msg = data.message;
-        console.log(msg);
+        if(msg === "true"){
+            setstatus("Successfully created netbanking password");
+        }else{
+            setstatus("Unsuccessful attempt");
+        }
+
 
 
        
@@ -127,7 +135,7 @@ function Netbankingcreate() {
                       </div>
     
                     </MDBCardBody>
-                 
+                    <div>{status}</div>
           
               </MDBCard>
     

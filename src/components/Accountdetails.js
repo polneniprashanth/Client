@@ -39,6 +39,8 @@ function Accountdetails(){
   const {data1,data2} =data || {};
   const [Transactiondetails,setTransactiondetails] = useState([]);
   const [user, setUserdetails] = useState([]);
+
+  const [aid, setaid] = useState();
   console.log(data);
 
   useEffect(() =>{
@@ -46,6 +48,7 @@ function Accountdetails(){
     .then((response) => {
       console.log(response);
        setUserdetails(response.data);
+       setaid(response.data.accid);
        console.log(user);
        
     })
@@ -59,6 +62,7 @@ function Accountdetails(){
     .then((response) => {
       console.log(response);
        setTransactiondetails(response.data);
+     
        console.log(Transactiondetails);
        
     })
@@ -69,10 +73,16 @@ function Accountdetails(){
 
 
   return(
-    <>
-    <div> <Navbar/></div>
+    <div>
+          <div> <Navbar/></div>
 
     <main>
+
+    <div style={{marginTop:"5px"}}>
+            <span style={{marginRight:"20px"}}><MDBBtn onClick={()=> navigate(`/Withdraw/${aid}`)}>Withdraw Money </MDBBtn></span>
+            <span><MDBBtn onClick = {()=> navigate(`/Deposit/${aid}`)}>Deposit Money</MDBBtn></span>
+    </div> 
+
       <h2 className='justify-content-center'>Account Details</h2>
       <Container>
         <Row>
@@ -117,7 +127,7 @@ function Accountdetails(){
      ))}
      </MDBTable>
   
-    </>
+    </div>
    
   )
 

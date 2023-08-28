@@ -86,7 +86,8 @@ const Adminaccess =()=>{
         axios.get(`http://172.20.0.55:9001/account/activate/${data}`)
         .then((response) => {
         console.log(response);
-        
+       // navigate('/Adminaccess');
+
         })
         .catch((error) => console.error(error));
         navigate('/Adminaccess');
@@ -100,7 +101,7 @@ const Adminaccess =()=>{
     return(
         <>
 
-        <div><Navbar/></div>
+        
         <div>
 
 

@@ -26,11 +26,11 @@ const Register = () =>{
 
     const [emailerror, setEmailerror] = useState('');
     const [passworderror, setPassworderror] = useState('');
+    const [phoneerror, setphoneerror] = useState('');
 
     const navigate = useNavigate();
 
     var emailRegex = /[^\s]*@[a-z0-9.-]*/i;
-    var passwordRegex = /^(?=.\d)(?=.*[A-Z]).{6,14}$/;
 
     // length --> [6,14]
     // it should contain atleast one digit
@@ -47,11 +47,51 @@ const Register = () =>{
             return emailRegex.test(email);
         }
 
+        const isValidPassword = (password) => {
+            console.log(password.length);
+            let f1=false,f2=false,f3=false;
+            for(let i=0;i<password.length;i++){
+                if(password[i]>='a'&&password[i]<='z')f1=true;
+                if(password[i]>='A'&&password[i]<='Z')f2=true;
+                if(password[i]>='0'&&password[i]<='9')f3=true;
+                        
+            }
+            return (password.length>=6 && password.length<=14) && f1&&f2&&f3;
+        }
+        const isValidphone = (phone) => {
+            console.log(phone);
+            let f1 =0;
+            for (let i=0;i<phone.length;i++){
+                if(phone[i]>='0' && phone[i]<='9') f1++;
+            }
+            return (phone.length===10 && f1===10);
+        }
+
+
         if(isValidEmail(email)){
             setEmailerror('');
         }
         else{
             setEmailerror('Enter a valid Email address');
+            return;
+        }
+
+
+        console.log(isValidPassword(passwordHash));
+        if(isValidPassword(passwordHash)){
+
+            setPassworderror('');
+        }
+        else{
+            setPassworderror('Enter a valid Password');
+            return;
+        }
+
+        if(isValidphone(phone)){
+            setphoneerror('');
+        }
+        else{
+            setphoneerror('Enter a valid Mobile Number');
             return;
         }
 
@@ -116,12 +156,13 @@ const Register = () =>{
                     <MDBIcon fas icon="user me-3" size='lg'/>
                     <MDBInput label='Mobile Number' id='form1' type='text' className='w-100' value = {phone} onChange = {(e)=> setMobileNumber(e.target.value) }/>
                 </div>
-
+                {phoneerror && <h6 style={{color:'red'}}>{phoneerror}</h6>}
                 <div className="d-flex flex-row align-items-center mb-4">
                     <MDBIcon fas icon="lock me-3" size='lg'/>
                     <MDBInput label='Password' id='form3' type='password' value = {passwordHash} onChange = {(e)=> setPassword(e.target.value)}/>
                     
                 </div>
+                {passworderror && <h6 style={{color:'red'}}>{passworderror}</h6>}
 
                 <div className = "password-validator">
                     <h6><ul>

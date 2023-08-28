@@ -25,6 +25,8 @@ function Netbankingchange() {
     const [old_pass, setold_pass] = useState("");
     const [new_pass, setnew_pass] = useState("");
 
+
+    const [status, setstatus] = useState();
  
 
 
@@ -51,8 +53,16 @@ function Netbankingchange() {
         const data = await response.json();
 
         console.log(data);
-        const msg = data.message;
+        const msg = data;
         console.log(msg);
+
+
+        if(msg === 0){
+          setstatus("Password changed successfully");
+        }  
+        else{
+          setstatus("Password changed failed");
+        }      // nagivate(``)
 
 
        
@@ -127,6 +137,10 @@ function Netbankingchange() {
     
                       <div className="d-flex justify-content-center pt-3">
                         <MDBBtn className='ms-2' color='warning'onClick = {handlesubmit} size='lg'>Submit form</MDBBtn>
+                      </div>
+
+                      <div>
+                        <h3> {status}</h3>
                       </div>
     
                     </MDBCardBody>

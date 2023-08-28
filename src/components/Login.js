@@ -111,8 +111,6 @@ const Login = ()=>{
                 <MDBBtn onClick = {handleLogin} className='mb-4' size='lg' disabled = {attempts === 0}>{attempts >0 ?'Login': "No Attempt Left."}</MDBBtn>
                 <h6>Not registered?<Link to = '/register'>Register</Link></h6>
 
-                <h5>Forgot Password?<Link to = '/Forgotpassword'>Click here </Link></h5>
-
                 </MDBCol>
 
                 <MDBCol md='10' lg='6' className='order-1 order-lg-2 d-flex align-items-center'>

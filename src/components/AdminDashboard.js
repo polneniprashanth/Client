@@ -1,11 +1,14 @@
 import React,{useState, useEffect} from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { MDBInputGroup, MDBInput, MDBIcon, MDBBtn, MDBTable, MDBTableHead, MDBTableBody } from 'mdb-react-ui-kit';
 import axios from 'axios';
+import Adminaccess from './Adminaccess';
+
 
 
 const AdminDashboard =()=>{
 
+    const navigate = useNavigate();
     const [userdetails1,setuserdetails1] = useState([])
     const [userdetails2,setuserdetails2] = useState([]);
     const [userdetails3,setuserdetails3] = useState([]);
@@ -61,10 +64,16 @@ const AdminDashboard =()=>{
 
     return(
         <>
+       <div style={{display:"flex",justifyContent:"center", alignItems:"center", marginTop:"5px"}}>
         <h3>Welcome to Admin Dashboard</h3>
+        <MDBBtn style={{ marginLeft: "200px",padding:"10px"}} onClick = {()=> navigate('/Adminaccess')}rippleColor='dark'>Manage Accounts</MDBBtn>
+       </div>
         <MDBInputGroup style={{justifyContent:"center", marginTop:"50px"}}>
         <MDBInput label='Search' value={query} onChange={handleChange} />
         <MDBBtn style={{padding:"10px", height:"38px", width:"80px"}} rippleColor='dark'>Search</MDBBtn>
+
+        
+
         </MDBInputGroup>
 
         <MDBTable striped>
